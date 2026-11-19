@@ -1,0 +1,41 @@
+[
+  {
+    "id": "eval-001",
+    "category": "session_security",
+    "description": "Valid HMAC-signed session token succeeds and persists state under workspace prefix",
+    "workspace": "dev",
+    "tamper_token": false,
+    "expected_status": "ok"
+  },
+  {
+    "id": "eval-002",
+    "category": "session_security",
+    "description": "Tampered HMAC signature is rejected before S3 or Bedrock access",
+    "workspace": "prod",
+    "tamper_token": true,
+    "expected_error": "InvalidSessionTokenError"
+  },
+  {
+    "id": "eval-003",
+    "category": "concurrency",
+    "description": "Stale S3 ETag triggers If-Match precondition failure and OptimisticLockError",
+    "workspace": "test",
+    "simulate_stale_etag": true,
+    "expected_error": "OptimisticLockError"
+  },
+  {
+    "id": "eval-004",
+    "category": "workspace_isolation",
+    "description": "Dev and prod workspaces store session state under isolated S3 prefixes",
+    "workspaces": ["dev", "prod"],
+    "expected_prefix_isolation": true
+  },
+  {
+    "id": "eval-005",
+    "category": "resilience",
+    "description": "Bedrock ThrottlingException retries up to max_retries and returns structured throttled response when exhausted",
+    "workspace": "dev",
+    "simulate_throttling": true,
+    "expected_status": "throttled"
+  }
+]
