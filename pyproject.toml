@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "serverless-bedrock-twin-mk2"
+version = "0.1.0"
+description = "Serverless AWS Bedrock digital twin on CloudFront, API Gateway, Lambda, and Terraform workspaces."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "boto3>=1.35.0",
+  "pydantic>=2.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0.0",
+  "moto>=5.0.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
